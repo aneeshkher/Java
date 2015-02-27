@@ -1,6 +1,8 @@
 public class PolynomialValue {
 	public long temp;
 
+	
+	//Evaluating a polynomial using the normal method.
 	public long getValue(int terms, int value, int degree[], int coeff[]) {
 		long answer = 0;
 		temp = 1;
@@ -21,6 +23,7 @@ public class PolynomialValue {
 		return answer;
 	}
 
+	//Evaluating the value of a polynomial using Horner's Rule
 	public long hornerRule(int degree[], int coeff[], int value) {
 
 		// System.out.println("Value received is: " + value);

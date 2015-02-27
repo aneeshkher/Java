@@ -1,8 +1,13 @@
 public class Polynomial {
 
+	/**
+	 * Test class for evaluating a polynomial
+	 * using the normal method and Horner's rule.
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+		
 		int number = 61;
 		int xValue = 4;
 		int degree[] = new int[number];
