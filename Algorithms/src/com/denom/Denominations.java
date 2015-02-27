@@ -1,8 +1,13 @@
 package com.denom;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+
+/**
+ * @author Aneesh
+ * Three methods for calculating the minimum number of coins
+ * given the denominations and the cent value.
+ */
 public class Denominations {
 	int coinNumber, coinCount, arrayPointer;
 	ArrayList<Integer> denom = new ArrayList<Integer>();
@@ -22,6 +27,7 @@ public class Denominations {
 		denom.add(4, 1);
 	}
 
+	//Recursive method running in O(n)
 	public void calculate(int number) { // Change to return VOID
 		size = denom.size();
 		// System.out.println("Array size is: " + size);
@@ -53,6 +59,7 @@ public class Denominations {
 		}
 	}
 
+	// Better recursive method running in O(n)
 	public void calculateRefined(int number, int denomination) {
 		int temp;
 		if (number == 0) {
@@ -75,6 +82,7 @@ public class Denominations {
 		}
 	}
 
+	// Non recursive method running in O(1)
 	public void calcuateConstant(int num) {
 		/*
 		 * denom.add(0, 50); denom.add(1, 25); denom.add(2, 10); denom.add(3,

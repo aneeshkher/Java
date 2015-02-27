@@ -1,5 +1,12 @@
 package com.denom;
 
+
+
+/**
+ * @author Aneesh
+ * Test class for sending input to methods
+ * Actual mathod implementations in Denominations.java
+ */
 public class TestDenominations {
 
 	private static TestDenominations obj;
