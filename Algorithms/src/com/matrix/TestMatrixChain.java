@@ -6,18 +6,19 @@ public class TestMatrixChain {
 
 	// public ArrayList<Integer> d = new ArrayList<Integer>();
 
-	public static int[] d = new int[] { 10, 15, 20, 25, 30, 35, 24, 47, 59 };
-	public static int[][] m = new int[10][10];
-	public static int[][] memM = new int[10][10];
-	public static int[][] recurseM = new int[10][10];
-	public static ArrayList<Integer> kValues = new ArrayList<Integer>();
-
+	static int[] d = new int[] { 10, 15, 20, 25, 30, 35, 24, 47, 59 };
+	
+	/*
+	 * Set the size of the arrays to a square matrix
+	 * with dimensions one more than the number of dimensions.
+	 */
+	static int[][] m = new int[10][10];
+	static int[][] memM = new int[10][10];
+	static int[][] recurseM = new int[10][10];
+	static ArrayList<Integer> kValues = new ArrayList<Integer>();
+	static int multCount;
 	static int count;
 	static int countM;
-	public TestMatrixChain() {
-		count = 0;
-		countM = 0;
-	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -30,6 +31,13 @@ public class TestMatrixChain {
 		System.out.println("First: " + first + ". Second: " + second);
 		System.out.println("Multiplications ratio: " + answer);
 
+		/*
+		 * Initializing the matrices and othe values
+		 */
+		
+		count = 0;
+		countM = 0;
+		multCount = 0;
 		int inputLength = 9;
 		for (int i = 0; i < inputLength + 1; i++) {
 			for (int j = 0; j < inputLength + 1; j++) {
@@ -61,16 +69,23 @@ public class TestMatrixChain {
 			recurseM[i][i] = 0;
 		}
 
+		/*
+		 * Recursive method.
+		 */
 		System.out.println("-----Recursive method-----");
+		
+		/*
+		 * Calculating total time
+		 */
+		long recStart = System.nanoTime();
 		int minCost = multiply(1, inputLength - 1);
-		System.out.println("Minimum cost: " + minCost);
-		//System.out.print("Values of k: ");
-		for (int i : kValues) {
-			System.out.print(i + " ");
-		}
-		System.out.println("");
-		System.out.println("Recursive calls: " + count);
-
+		long recEnd = System.nanoTime();
+		long recTotalTime = recEnd - recStart;
+		
+		
+		/*
+		 * Printing the M matrix which holds the value
+		 */
 		System.out.println("M Matrix");
 		for (int i = 1; i < inputLength; i++) {
 			for (int j = 1; j < inputLength; j++) {
@@ -78,22 +93,37 @@ public class TestMatrixChain {
 			}
 			System.out.println("");
 		}
-
+		
+		System.out.println("Scalar multiplications: " + multCount);
+		System.out.println("Total time: " + recTotalTime);
+		System.out.println("Minimum cost: " + minCost);
+		System.out.println("Recursive calls: " + count);
 		System.out.println("-------------------------");
 
+		
+		/*
+		 * Dynamic programming method. Non-recursive
+		 */
 		System.out.println("-----Dynamic programming method-----");
-		multDynamic(inputLength - 1);
-		System.out.println("-------------------------");
-		System.out.println("-----Memoizing method-----");
 
-		System.out.println("Before");
-		for (int i = 1; i < inputLength; i++) {
-			for (int j = 1; j < inputLength; j++) {
-				System.out.print(memM[i][j] + "	");
-			}
-			System.out.println("");
-		}
+		multDynamic(inputLength - 1);
+	
+		System.out.println("-------------------------");
+		
+		
+		/*
+		 * Dynamic programming using memoizing.
+		 */
+		System.out.println("-----Memoizing method-----");
+		multCount = 0;
+		
+		/*
+		 * Calculating the time taken
+		 */
+		long memStart = System.nanoTime();
 		int memMinCost = memoizeDynamic(1, inputLength - 1);
+		long memEnd = System.nanoTime();
+		long memTotal = memEnd - memStart;
 
 		System.out.println("After");
 		for (int i = 1; i < inputLength; i++) {
@@ -102,12 +132,19 @@ public class TestMatrixChain {
 			}
 			System.out.println("");
 		}
+		
 		System.out.println("Recursive calls: " + countM);
+		System.out.println("Scalar multiplications: " + multCount);
+		System.out.println("Total time: " + memTotal);
 		System.out.println("Minimum cost: " + memMinCost);
 		System.out.println("-------------------------");
 		System.out.println();
 	}
 
+	/*
+	 * Recursive method to find the total
+	 * number of scalar multiplications
+	 */
 	public static int multiply(int i, int j) {
 		count++;
 		if (i == j) {
@@ -119,6 +156,7 @@ public class TestMatrixChain {
 			for (k = i; k < j; k++) {
 				cost = multiply(i, k) + multiply(k + 1, j) + d[i - 1] * d[k]
 						* d[j];
+				multCount += 2;
 				if (minCost == -1) {
 					minCost = cost;
 					minK = k;
@@ -135,6 +173,11 @@ public class TestMatrixChain {
 		}
 	}
 
+	
+	/*
+	 * Dynamic programming method to find the
+	 * total number of multiplications.
+	 */
 	public static void multDynamic(int n) {
 		int m[][] = new int[n + 1][n + 1];
 		int s[][] = new int[n + 1][n + 1];
@@ -142,8 +185,10 @@ public class TestMatrixChain {
 			m[i][i] = 0;
 		}
 		int minCost;
+		int  multCount = 0;
 		int cost, minK;
 		minK = -1;
+		long dynStart = System.nanoTime();
 		for (int i = n - 1; i > 0; i--) {
 			for (int j = i + 1; j <= n; j++) {
 				minCost = -1;
@@ -154,6 +199,7 @@ public class TestMatrixChain {
 					 * d[j]);
 					 */
 					cost = m[i][k] + m[k + 1][j] + d[i - 1] * d[k] * d[j];
+					multCount += 2;
 					if (minCost == -1) {
 						minCost = cost;
 						minK = k;
@@ -169,6 +215,9 @@ public class TestMatrixChain {
 			}
 		}
 
+		long dynEnd = System.nanoTime();
+		long dynTotal = dynEnd - dynStart;
+		
 		System.out.println("M Matrix");
 		for (int i = 1; i < n + 1; i++) {
 			for (int j = 1; j < n + 1; j++) {
@@ -185,6 +234,10 @@ public class TestMatrixChain {
 			}
 			System.out.println("");
 		}
+		
+		System.out.println("Scalar multiplications: " + multCount);
+		System.out.println("Total time: " + dynTotal);
+		System.out.println("Minimum cost: " + m[1][n]);	
 	}
 
 	public static int memoizeDynamic(int i, int j) {
@@ -203,6 +256,7 @@ public class TestMatrixChain {
 					memM[k + 1][j] = memoizeDynamic(k + 1, j);
 				}
 				cost = memM[i][k] + memM[k + 1][j] + d[i - 1] * d[k] * d[j];
+				multCount += 2;
 				//cost = memoizeDynamic(i, k) + memoizeDynamic(k + 1, j) + d[i - 1] * d[k] * d[j];
 				if (minCost == -1) {
 					minCost = cost;
