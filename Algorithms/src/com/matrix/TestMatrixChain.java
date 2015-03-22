@@ -30,38 +30,39 @@ public class TestMatrixChain {
 		System.out.println("First: " + first + ". Second: " + second);
 		System.out.println("Multiplications ratio: " + answer);
 
-		for (int i = 0; i < 7; i++) {
-			for (int j = 0; j < 7; j++) {
+		int inputLength = 6;
+		for (int i = 0; i < inputLength + 1; i++) {
+			for (int j = 0; j < inputLength + 1; j++) {
 				m[i][j] = -1;
 			}
 		}
 
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < inputLength + 1; i++) {
 			m[i][i] = 0;
 		}
 
-		for (int i = 0; i < 7; i++) {
-			for (int j = 0; j < 7; j++) {
+		for (int i = 0; i < inputLength + 1; i++) {
+			for (int j = 0; j < inputLength + 1; j++) {
 				memM[i][j] = -1;
 			}
 		}
 
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < inputLength + 1; i++) {
 			memM[i][i] = 0;
 		}
 
-		for (int i = 0; i < 7; i++) {
-			for (int j = 0; j < 7; j++) {
+		for (int i = 0; i < inputLength + 1; i++) {
+			for (int j = 0; j < inputLength + 1; j++) {
 				recurseM[i][j] = -1;
 			}
 		}
 
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < inputLength + 1; i++) {
 			recurseM[i][i] = 0;
 		}
 
 		System.out.println("-----Recursive method-----");
-		int minCost = multiply(1, 5);
+		int minCost = multiply(1, inputLength - 1);
 		System.out.println("Minimum cost: " + minCost);
 		System.out.print("Values of k: ");
 		for (int i : kValues) {
@@ -71,8 +72,8 @@ public class TestMatrixChain {
 		System.out.println("Recursive calls: " + count);
 
 		System.out.println("M Matrix");
-		for (int i = 1; i < 6; i++) {
-			for (int j = 1; j < 6; j++) {
+		for (int i = 1; i < inputLength; i++) {
+			for (int j = 1; j < inputLength; j++) {
 				System.out.print(recurseM[i][j] + "	");
 			}
 			System.out.println("");
@@ -86,17 +87,17 @@ public class TestMatrixChain {
 		System.out.println("-----Memoizing method-----");
 
 		System.out.println("Before");
-		for (int i = 1; i < 6; i++) {
-			for (int j = 1; j < 6; j++) {
+		for (int i = 1; i < inputLength; i++) {
+			for (int j = 1; j < inputLength; j++) {
 				System.out.print(memM[i][j] + "	");
 			}
 			System.out.println("");
 		}
-		int memMinCost = memoizeDynamic(1, 5);
+		int memMinCost = memoizeDynamic(1, inputLength - 1);
 
 		System.out.println("After");
-		for (int i = 1; i < 6; i++) {
-			for (int j = 1; j < 6; j++) {
+		for (int i = 1; i < inputLength; i++) {
+			for (int j = 1; j < inputLength; j++) {
 				System.out.print(memM[i][j] + "	");
 			}
 			System.out.println("");
