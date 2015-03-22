@@ -94,12 +94,12 @@ public class TestMatrixChain {
 			System.out.println("");
 		}
 		
-		System.out.println("Scalar multiplications: " + multCount);
 		System.out.println("Total time: " + recTotalTime);
-		System.out.println("Minimum cost: " + minCost);
 		System.out.println("Recursive calls: " + count);
+		System.out.println("Scalar multiplications: " + multCount);
+		System.out.println("Minimum cost: " + minCost);
+		multCount = 0;
 		System.out.println("-------------------------");
-
 		
 		/*
 		 * Dynamic programming method. Non-recursive
@@ -133,9 +133,9 @@ public class TestMatrixChain {
 			System.out.println("");
 		}
 		
+		System.out.println("Total time: " + memTotal);
 		System.out.println("Recursive calls: " + countM);
 		System.out.println("Scalar multiplications: " + multCount);
-		System.out.println("Total time: " + memTotal);
 		System.out.println("Minimum cost: " + memMinCost);
 		System.out.println("-------------------------");
 		System.out.println();
