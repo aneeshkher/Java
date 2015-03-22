@@ -6,10 +6,10 @@ public class TestMatrixChain {
 
 	// public ArrayList<Integer> d = new ArrayList<Integer>();
 
-	public static int[] d = new int[] { 10, 15, 20, 25, 30, 35 };
-	public static int[][] m = new int[7][7];
-	public static int[][] memM = new int[7][7];
-	public static int[][] recurseM = new int[7][7];
+	public static int[] d = new int[] { 10, 15, 20, 25, 30, 35, 24, 47, 59 };
+	public static int[][] m = new int[10][10];
+	public static int[][] memM = new int[10][10];
+	public static int[][] recurseM = new int[10][10];
 	public static ArrayList<Integer> kValues = new ArrayList<Integer>();
 
 	static int count;
@@ -30,7 +30,7 @@ public class TestMatrixChain {
 		System.out.println("First: " + first + ". Second: " + second);
 		System.out.println("Multiplications ratio: " + answer);
 
-		int inputLength = 6;
+		int inputLength = 9;
 		for (int i = 0; i < inputLength + 1; i++) {
 			for (int j = 0; j < inputLength + 1; j++) {
 				m[i][j] = -1;
@@ -64,7 +64,7 @@ public class TestMatrixChain {
 		System.out.println("-----Recursive method-----");
 		int minCost = multiply(1, inputLength - 1);
 		System.out.println("Minimum cost: " + minCost);
-		System.out.print("Values of k: ");
+		//System.out.print("Values of k: ");
 		for (int i : kValues) {
 			System.out.print(i + " ");
 		}
@@ -82,7 +82,7 @@ public class TestMatrixChain {
 		System.out.println("-------------------------");
 
 		System.out.println("-----Dynamic programming method-----");
-		multDynamic(5);
+		multDynamic(inputLength - 1);
 		System.out.println("-------------------------");
 		System.out.println("-----Memoizing method-----");
 
