@@ -6,15 +6,24 @@ public class TestMatrixChain {
 
 	// public ArrayList<Integer> d = new ArrayList<Integer>();
 
-	static int[] d = new int[] { 10, 15, 20, 25, 30, 35, 24, 47, 59 };
+	//static int[] d = new int[] { 10, 15, 20, 25, 30, 35, 24, 47, 59 };
+	//static int[] d = new int[] { 1,5,3,9,1,2,7,3,4,6,5,2,1,2 };
+	//static int[] d = new int[] { 6, 1, 3, 5, 7, 8, 4, 9, 20, 4, 9, 1, 5, 2 };
+	
+	static int[] d = new int[] {5,6,4,8,7,9,7,8,6,9,3,7,6,5};
+	static int inputLength = d.length;
 	
 	/*
 	 * Set the size of the arrays to a square matrix
 	 * with dimensions one more than the number of dimensions.
 	 */
-	static int[][] m = new int[10][10];
-	static int[][] memM = new int[10][10];
-	static int[][] recurseM = new int[10][10];
+	//static int[][] m = new int[inputLength + 1][inputLength + 1];
+	static int[][] recurseM = new int[inputLength + 1][inputLength + 1];
+	static int[][] memM = new int[inputLength + 1][inputLength + 1];
+	
+	static int[][] recurseS = new int[inputLength + 1][inputLength + 1];
+	static int[][] memS = new int[inputLength + 1][inputLength + 1];
+	
 	static ArrayList<Integer> kValues = new ArrayList<Integer>();
 	static int multCount;
 	static int count;
@@ -32,22 +41,12 @@ public class TestMatrixChain {
 		System.out.println("Multiplications ratio: " + answer);
 
 		/*
-		 * Initializing the matrices and othe values
+		 * Initializing the matrices and other values
 		 */
 		
 		count = 0;
 		countM = 0;
 		multCount = 0;
-		int inputLength = 9;
-		for (int i = 0; i < inputLength + 1; i++) {
-			for (int j = 0; j < inputLength + 1; j++) {
-				m[i][j] = -1;
-			}
-		}
-
-		for (int i = 0; i < inputLength + 1; i++) {
-			m[i][i] = 0;
-		}
 
 		for (int i = 0; i < inputLength + 1; i++) {
 			for (int j = 0; j < inputLength + 1; j++) {
@@ -84,12 +83,20 @@ public class TestMatrixChain {
 		
 		
 		/*
-		 * Printing the M matrix which holds the value
+		 * Printing the M and S matrices which hold the values
 		 */
 		System.out.println("M Matrix");
 		for (int i = 1; i < inputLength; i++) {
 			for (int j = 1; j < inputLength; j++) {
 				System.out.print(recurseM[i][j] + "	");
+			}
+			System.out.println("");
+		}
+		
+		System.out.println("S Matrix");
+		for (int i = 1; i < inputLength; i++) {
+			for (int j = 1; j < inputLength; j++) {
+				System.out.print(recurseS[i][j] + "	");
 			}
 			System.out.println("");
 		}
@@ -112,7 +119,7 @@ public class TestMatrixChain {
 		
 		
 		/*
-		 * Dynamic programming using memoizing.
+		 * Memoized version
 		 */
 		System.out.println("-----Memoizing method-----");
 		multCount = 0;
@@ -125,10 +132,21 @@ public class TestMatrixChain {
 		long memEnd = System.nanoTime();
 		long memTotal = memEnd - memStart;
 
+		/*
+		 * Printing the M and S matrices which hold the values
+		 */
 		System.out.println("After");
 		for (int i = 1; i < inputLength; i++) {
 			for (int j = 1; j < inputLength; j++) {
 				System.out.print(memM[i][j] + "	");
+			}
+			System.out.println("");
+		}
+		
+		System.out.println("S Matrix");
+		for (int i = 1; i < inputLength; i++) {
+			for (int j = 1; j < inputLength; j++) {
+				System.out.print(memS[i][j] + "	");
 			}
 			System.out.println("");
 		}
@@ -168,6 +186,7 @@ public class TestMatrixChain {
 				}
 			}
 			recurseM[i][j] = minCost;
+			recurseS[i][j] = minK;
 			kValues.add(minK);
 			return minCost;
 		}
@@ -188,6 +207,7 @@ public class TestMatrixChain {
 		int  multCount = 0;
 		int cost, minK;
 		minK = -1;
+		int recCallCount = 0;
 		long dynStart = System.nanoTime();
 		for (int i = n - 1; i > 0; i--) {
 			for (int j = i + 1; j <= n; j++) {
@@ -199,6 +219,7 @@ public class TestMatrixChain {
 					 * d[j]);
 					 */
 					cost = m[i][k] + m[k + 1][j] + d[i - 1] * d[k] * d[j];
+					recCallCount++;
 					multCount += 2;
 					if (minCost == -1) {
 						minCost = cost;
@@ -237,6 +258,7 @@ public class TestMatrixChain {
 		
 		System.out.println("Scalar multiplications: " + multCount);
 		System.out.println("Total time: " + dynTotal);
+		System.out.println("Recursive calls: " + recCallCount);
 		System.out.println("Minimum cost: " + m[1][n]);	
 	}
 
@@ -269,6 +291,7 @@ public class TestMatrixChain {
 				}
 			}
 			memM[i][j] = minCost;
+			memS[i][j] = minK;
 			kValues.add(minK);
 			return minCost;
 		}
