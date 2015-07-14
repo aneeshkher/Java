@@ -96,7 +96,7 @@ public class TestMatrixChain {
 		System.out.println("S Matrix");
 		for (int i = 1; i < inputLength; i++) {
 			for (int j = 1; j < inputLength; j++) {
-				System.out.print(recurseS[i][j] + "	");
+				System.out.print(recurseS[i][j] + "   ");
 			}
 			System.out.println("");
 		}
@@ -138,7 +138,7 @@ public class TestMatrixChain {
 		System.out.println("After");
 		for (int i = 1; i < inputLength; i++) {
 			for (int j = 1; j < inputLength; j++) {
-				System.out.print(memM[i][j] + "	");
+				System.out.print(memM[i][j] + "\t");
 			}
 			System.out.println("");
 		}
