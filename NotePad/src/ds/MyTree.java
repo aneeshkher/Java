@@ -26,6 +26,8 @@ public class MyTree {
 			System.out.println("C. Exit");
 			System.out.println("D. Get max height");
 			System.out.println("E. Search");
+			System.out.println("F. Get Minimum value");
+			System.out.println("G. Get Maximum value");
 			String choice = scan.next();
 
 			switch(choice.toUpperCase()) {
@@ -38,13 +40,19 @@ public class MyTree {
 				
 				switch(travChoice.toUpperCase()) {
 				case "A":
+					System.out.println("");
 					traverse(TreeRoot.root);
+					System.out.println("");
 					break;
 				case "B":
+					System.out.println("");
 					postOrderTraverse(TreeRoot.root);
+					System.out.println("");
 					break;
 				case "C":
+					System.out.println("");
 					inOrderTraverse(TreeRoot.root);
+					System.out.println("");
 					break;
 				default:
 					break;
@@ -78,6 +86,15 @@ public class MyTree {
 				}
 				break;
 				
+			case "F":
+				int minVal = getMin(TreeRoot.root);
+				System.out.println("Minimum value: " + minVal);
+				break;
+				
+			case "G":
+				int maxVal = getMax(TreeRoot.root);
+				System.out.println("Maximum value: " + maxVal);
+				break;
 			default:
 				breakFlag = 1;
 				break;
@@ -90,6 +107,22 @@ public class MyTree {
 
 		scan.close();
 
+	}
+	
+	public static int getMin (TreeNode root) {
+		if (root.left == null) {
+			return root.data;
+		} else {
+			return getMin(root.left);
+		}
+	}
+	
+	public static int getMax (TreeNode root) {
+		if (root.right == null) {
+			return root.data;
+		} else {
+			return getMax(root.right);
+		}
 	}
 	
 	public static boolean search (int data, TreeNode root) {
@@ -108,7 +141,7 @@ public class MyTree {
 
 	public static void traverse(TreeNode node) {
 		if (node != null) {
-			System.out.println(node.data);
+			System.out.print(node.data + " ");
 			traverse(node.left);
 			traverse(node.right);
 		}
@@ -120,7 +153,7 @@ public class MyTree {
 		} else {
 			postOrderTraverse(root.left);
 			postOrderTraverse(root.right);
-			System.out.println(root.data);
+			System.out.print(root.data + " ");
 		}
 	}
 	
@@ -129,7 +162,7 @@ public class MyTree {
 			return;
 		} else {
 			inOrderTraverse(root.left);
-			System.out.println(root.data);
+			System.out.print(root.data + " ");
 			inOrderTraverse(root.right);
 		}
 	}
@@ -143,20 +176,12 @@ public class MyTree {
 			if (maxDepth < count) {
 				maxDepth = count;
 			}
-			System.out.println("Before entering left for " + root.data
-					+ ". Count: " + count);
 			getMaxHeight(root.left);
-			System.out.println("After returning from left for " +root.data
-					+ ". Count: " + count);
 			count++;
-			System.out.println("Before entering right for " + root.data
-					+ ". Count: " + count);
 			if (maxDepth < count) {
 				maxDepth = count;
 			}
 			getMaxHeight(root.right);
-			System.out.println("After returning from right for " + root.data
-					+ ". Count: " + count);
 			count--;
 		}
 	}

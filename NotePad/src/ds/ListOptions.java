@@ -1,4 +1,5 @@
 package ds;
+
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -8,11 +9,11 @@ public class ListOptions {
 		int count = 0;
 		while (temp != null) {
 			temp = temp.next;
-			count ++;
+			count++;
 		}
 		return count;
 	}
-	
+
 	public void removeDuplicates() {
 		HashMap<Integer, Boolean> duplicates = new HashMap<>();
 		Node temp = Root.root;
@@ -21,7 +22,7 @@ public class ListOptions {
 			if (duplicates.containsKey(temp.data)) {
 				previous.next = temp.next;
 				temp = temp.next;
-				
+
 			} else {
 				duplicates.put(temp.data, true);
 				previous = temp;
@@ -29,7 +30,7 @@ public class ListOptions {
 			}
 		}
 	}
-	
+
 	public void getNthNode(int n) {
 		Node temp = Root.root;
 		int flag = 0;
@@ -43,19 +44,52 @@ public class ListOptions {
 		if (flag == 1) {
 			System.out.println(n + " nodes do not exist");
 		} else {
-			System.out.println("Node number " + n + 
-					" is " + temp.data);
+			System.out.println("Node number " + n + " is " + temp.data);
 		}
 	}
 	
+	public void reversePosition (int m, int n) {
+		System.out.println("Reversing list from position "
+				+ m + " to " + n);
+		
+		
+	}
+
+	public void reverseGroup(int k) {
+		Node temp = Root.root;
+		for (int i = 1; i < k; i++) {
+			temp = temp.next;
+		}
+
+		//Node newHead = temp;
+		System.out.println("New head will point: " + temp.data);
+
+		Node previous = null;
+		Node current = Root.root;
+		Node next = current.next;
+		Node first = Root.root;
+		while (next != null) {
+
+			for (int i = 0; i < k; i++) {
+				current.next = previous;
+				previous = current;
+				current = next;
+				next = current.next;
+			}
+
+			first.next = current;
+		}
+
+	}
+
 	public void rotateList(int k) {
 		Node temp = Root.root;
 		for (int i = 1; i < k; i++) {
 			temp = temp.next;
 		}
-		
+
 		System.out.println("temp.data: " + temp.data);
-		
+
 		Node temp2 = temp.next;
 		System.out.println("temp2.data: " + temp2.data);
 		temp.next = null;
@@ -63,23 +97,25 @@ public class ListOptions {
 		while (temp2.next != null) {
 			temp2 = temp2.next;
 		}
-		 temp2.next = Root.root;
-		 Root.root = temp;
+		temp2.next = Root.root;
+		Root.root = temp;
 	}
-	
+
 	public void chooseOption(Scanner scan) {
-		
+
 		System.out.println("Enter your choice:");
 		System.out.println("A. Length");
 		System.out.println("B. Remove Duplicates");
 		System.out.println("C. Get Nth node");
 		System.out.println("D. Rotate");
+		System.out.println("E. Reverse Group");
+		System.out.println("F. Reverse from specific positions");
 		String option = scan.next();
 		switch (option.toUpperCase()) {
 		case "A":
 			int length = calculateLength();
 			System.out.println("Length of list is: " + length);
-			//scan.close();
+			// scan.close();
 			break;
 		case "B":
 			removeDuplicates();
@@ -95,8 +131,23 @@ public class ListOptions {
 			int k = scan.nextInt();
 			rotateList(k);
 			break;
+
+		case "E":
+			System.out.println("Enter the k nodes you want to" + " reverse");
+			int reverseK = scan.nextInt();
+			reverseGroup(reverseK);
+			break;
+			
+		case "F":
+			System.out.println("Enter the first position");
+			int m = scan.nextInt();
+			System.out.println("Enter second position");
+			int n = scan.nextInt();
+			reversePosition(m, n);
+			break;
+
 		default:
-			//scan.close();
+			// scan.close();
 			break;
 		}
 	}

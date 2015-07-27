@@ -1,4 +1,5 @@
 package ds;
+
 import java.util.Scanner;
 
 public class MyLinkedList {
@@ -9,6 +10,11 @@ public class MyLinkedList {
 		Scanner scan = new Scanner(System.in);
 		int flag = 0;
 
+		int[] a = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+
+		for (int i : a) {
+			insert(i, scan);
+		}
 		while (true) {
 			System.out.println("Enter your choice:");
 			System.out.println("A. Insert");
@@ -96,7 +102,7 @@ public class MyLinkedList {
 				flag = 1;
 				break;
 			case "G":
-				ListOptions	l1 = new ListOptions();
+				ListOptions l1 = new ListOptions();
 				l1.chooseOption(scan);
 				break;
 			default:
