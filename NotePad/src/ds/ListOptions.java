@@ -52,34 +52,54 @@ public class ListOptions {
 		System.out.println("Reversing list from position "
 				+ m + " to " + n);
 		
+		Node current = Root.root;
+		Node previous = null;
+		Node before = null;
+		int count = 1;
+		while (count < m) {
+			before = current;
+			current = current.next;
+			count++;
+		}
+		Node first = current;
+		Node next = current.next;
+		
+		int temp = n - m + 1;
+		for (int i = 0; i < temp; i++) {
+			current.next = previous;
+			previous = current;
+			current = next;
+			if (current == null) {
+				break;
+			}
+			next = current.next;
+		}
+		
+		if (first.equals(Root.root)) {
+			first.next = current;
+			Root.root = previous;
+		} else {
+			first.next = current;
+			before.next = previous;
+		}
 		
 	}
 
 	public void reverseGroup(int k) {
+		int count = 0;
+		
 		Node temp = Root.root;
-		for (int i = 1; i < k; i++) {
-			temp = temp.next;
-		}
-
-		//Node newHead = temp;
-		System.out.println("New head will point: " + temp.data);
-
-		Node previous = null;
-		Node current = Root.root;
-		Node next = current.next;
-		Node first = Root.root;
-		while (next != null) {
-
+		while (true) {
+			reversePosition(count + 1, count + k);
 			for (int i = 0; i < k; i++) {
-				current.next = previous;
-				previous = current;
-				current = next;
-				next = current.next;
+				temp = temp.next;
+				if (temp == null) {
+					return;
+				}
+				count++;
 			}
-
-			first.next = current;
+			
 		}
-
 	}
 
 	public void rotateList(int k) {
@@ -108,8 +128,8 @@ public class ListOptions {
 		System.out.println("B. Remove Duplicates");
 		System.out.println("C. Get Nth node");
 		System.out.println("D. Rotate");
-		System.out.println("E. Reverse Group");
-		System.out.println("F. Reverse from specific positions");
+		System.out.println("E. Reverse every k nodes");
+		System.out.println("F. Reverse from A to B");
 		String option = scan.next();
 		switch (option.toUpperCase()) {
 		case "A":
