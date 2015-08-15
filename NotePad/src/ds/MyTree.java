@@ -28,6 +28,7 @@ public class MyTree {
 			System.out.println("E. Search");
 			System.out.println("F. Get Minimum value");
 			System.out.println("G. Get Maximum value");
+			System.out.println("H. Get node count");
 			String choice = scan.next();
 
 			switch(choice.toUpperCase()) {
@@ -72,8 +73,11 @@ public class MyTree {
 				break;
 				
 			case "D":
-				getMaxHeight(TreeRoot.root);
-				System.out.println("Maximum height: " + maxDepth);
+				
+				int maxHeight = getMaxHeightSimple(TreeRoot.root);
+				System.out.println("Maximum height: " + maxHeight);
+				//getMaxHeight(TreeRoot.root);
+				//System.out.println("Maximum height: " + maxDepth);
 				break;
 				
 			case "E":
@@ -95,6 +99,12 @@ public class MyTree {
 				int maxVal = getMax(TreeRoot.root);
 				System.out.println("Maximum value: " + maxVal);
 				break;
+				
+			case "H":
+				int elementCount = countElements(TreeRoot.root);
+				System.out.println("Number of elements is: " + elementCount);
+				break;
+				
 			default:
 				breakFlag = 1;
 				break;
@@ -138,6 +148,15 @@ public class MyTree {
 			}
 		}
 	}
+	
+	public static int countElements(TreeNode node) {
+		if (node == null) {
+			return 0;
+		} else {
+			return countElements(node.left) + 
+					countElements(node.right) + 1;
+		}
+	}
 
 	public static void traverse(TreeNode node) {
 		if (node != null) {
@@ -164,6 +183,15 @@ public class MyTree {
 			inOrderTraverse(root.left);
 			System.out.print(root.data + " ");
 			inOrderTraverse(root.right);
+		}
+	}
+	
+	public static int getMaxHeightSimple(TreeNode root) {
+		if (root == null) {
+			return 0;
+		} else {
+			return Math.max(getMaxHeightSimple(root.left) + 1,
+					getMaxHeightSimple(root.right) + 1);
 		}
 	}
 	
